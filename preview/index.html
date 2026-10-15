@@ -1,0 +1,661 @@
+<title>Rock Shore Builders</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+/* Rock Shore Builders — layout: dark navy ground sampled from the logo, a steel-blue band, and cool paper sections for rhythm.
+   Single committed look (dark first), so colors are explicit tokens. */
+:root {
+  --navy-950: #020d1a;
+  --navy-900: #041326;
+  --navy-800: #08203c;
+  --navy-700: #0e2f55;
+  --steel: #4a7fc1;
+  --steel-lt: #7fa8dc;
+  --silver: #c9d3df;
+  --white: #f4f7fb;
+  --paper: #e8edf3;
+  --paper-2: #dbe3ec;
+  --ink: #0a1b2f;
+  --ink-2: #3b4d63;
+  --muted: #93a8c0;
+  --line: rgba(201, 211, 223, .16);
+  --font-display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --gutter: max(16px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(16px, env(safe-area-inset-right, 0px));
+  --maxw: 1180px;
+  color-scheme: dark;
+}
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0; background: var(--navy-900); color: var(--white);
+  font: 400 1.0625rem/1.6 var(--font-body); -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3, h4 { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .035em; line-height: 1.04; margin: 0; text-wrap: balance; font-weight: 600; }
+p { margin: 0 0 1em; }
+:focus-visible { outline: 2px solid var(--steel-lt); outline-offset: 3px; }
+.wrap { width: 100%; max-width: calc(var(--maxw) + var(--gutter) + var(--gutter-r)); margin-inline: auto; padding-left: var(--gutter); padding-right: var(--gutter-r); }
+
+/* ---------- header ---------- */
+.site-header { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(2, 13, 26, .82); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.header-row { display: flex; align-items: center; gap: 1.25rem; min-height: 68px; }
+.brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; font-family: var(--font-display); font-size: 1.35rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
+.brand b { color: var(--steel-lt); font-weight: 600; }
+.brand img { border-radius: 8px; }
+.nav { display: flex; gap: 1.6rem; margin-left: auto; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em; font-size: 1.05rem; font-weight: 500; }
+.nav a { text-decoration: none; color: var(--silver); padding: .35rem 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+.nav a:hover { color: var(--white); border-color: var(--steel); }
+.nav-toggle { display: none; background: none; border: 1px solid var(--line); border-radius: 8px; width: 44px; height: 44px; padding: 0; cursor: pointer; position: relative; }
+.nav-toggle span { position: absolute; left: 11px; right: 11px; height: 2px; background: var(--white); transition: transform .25s; }
+.nav-toggle span:first-child { top: 17px; } .nav-toggle span:last-child { top: 25px; }
+.nav-toggle[aria-expanded="true"] span:first-child { transform: translateY(4px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] span:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+/* ---------- buttons ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-weight: 600; font-size: 1.2rem; text-decoration: none; padding: .85rem 1.8rem; border-radius: 3px; border: 1px solid transparent; cursor: pointer; transition: transform .2s, box-shadow .2s, background .2s, color .2s; line-height: 1.1; }
+.btn--sm { font-size: 1.05rem; padding: .6rem 1.1rem; }
+.btn--block { width: 100%; }
+.btn--metal { color: var(--navy-950); background: linear-gradient(180deg, #ffffff 0%, #d3dce8 48%, #aebdcf 52%, #dfe7f0 100%); box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 8px 24px rgba(2, 13, 26, .45); }
+.btn--metal:hover { transform: translateY(-2px); box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 12px 30px rgba(74, 127, 193, .35); }
+.btn--ghost { color: var(--white); border-color: rgba(244, 247, 251, .5); background: rgba(2, 13, 26, .25); }
+.btn--ghost:hover { background: rgba(244, 247, 251, .12); border-color: var(--white); }
+.btn--outline { color: var(--ink); border-color: var(--ink); }
+.btn--outline:hover { background: var(--ink); color: var(--white); }
+
+/* ---------- type helpers ---------- */
+.eyebrow { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .22em; font-size: 1rem; font-weight: 600; color: var(--steel-lt); margin-bottom: .9rem; display: flex; align-items: center; gap: .8rem; }
+.eyebrow::before { content: ""; width: 34px; height: 2px; background: var(--steel); flex: none; }
+.eyebrow--center { justify-content: center; }
+.eyebrow--center::after { content: ""; width: 34px; height: 2px; background: var(--steel); flex: none; }
+.section { padding-block: clamp(3.5rem, 8vw, 6.5rem); position: relative; }
+.section--paper { background: var(--paper); color: var(--ink); }
+.section--paper .eyebrow { color: #2f6199; }
+.section--paper .eyebrow::before { background: #2f6199; }
+.section--deep { background: var(--navy-950); }
+.section--navy { background: var(--navy-800); }
+.section__head { margin-bottom: 2.4rem; }
+.section__head h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); max-width: 24ch; }
+.section__head--row { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.section__intro { max-width: 62ch; color: var(--silver); margin-top: -1rem; }
+
+/* ---------- hero ---------- */
+.hero { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(3.5rem, 7vw, 6rem); text-align: center; }
+.hero__bg { position: absolute; inset: 0; z-index: -2; }
+.hero__bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; animation: drift 38s ease-in-out infinite alternate; transform-origin: 60% 40%; }
+.hero__shade { position: absolute; inset: 0; z-index: -1; background:
+  radial-gradient(ellipse 70% 60% at 50% 38%, rgba(4,19,38,.35) 0%, rgba(4,19,38,.78) 100%),
+  linear-gradient(180deg, rgba(2,13,26,.55) 0%, rgba(4,19,38,.55) 45%, rgba(4,19,38,.96) 100%); }
+@keyframes drift { from { transform: scale(1.02); } to { transform: scale(1.14) translate(-1.5%, -1%); } }
+.hero__inner { display: flex; flex-direction: column; align-items: center; }
+.hero__logo-wrap { position: relative; width: min(820px, 100%); margin-block: .4rem 1.2rem; }
+.hero__logo { width: 100%; height: auto; position: relative; filter: drop-shadow(0 10px 40px rgba(2, 13, 26, .7)); }
+.blade { position: absolute; left: 50%; top: 48%; width: 84%; max-width: none; aspect-ratio: 1; translate: -50% -50%; opacity: .42; animation: spin 140s linear infinite; pointer-events: none; }
+@keyframes spin { to { rotate: 360deg; } }
+.hero h1 { font-size: clamp(2.5rem, 7vw, 5rem); letter-spacing: .05em; text-shadow: 0 4px 30px rgba(2,13,26,.8); }
+.hero__lead { max-width: 56ch; color: var(--silver); font-size: clamp(1.05rem, 2vw, 1.25rem); margin: 1.1rem 0 1.8rem; text-shadow: 0 2px 14px rgba(2,13,26,.9); }
+.hero__cta { display: flex; gap: .9rem; flex-wrap: wrap; justify-content: center; }
+
+/* ---------- strip ---------- */
+.strip { background: linear-gradient(180deg, var(--steel) 0%, #3b6aa8 100%); color: var(--white); }
+.strip__row { display: grid; grid-template-columns: repeat(3, 1fr); }
+.strip__row > div { padding: 1.5rem 1.4rem; display: flex; align-items: center; gap: 1rem; border-left: 1px solid rgba(255,255,255,.22); min-width: 0; }
+.strip__row > div:first-child { border-left: 0; }
+.strip strong { font-family: var(--font-display); font-size: clamp(1.9rem, 4vw, 2.7rem); letter-spacing: .03em; line-height: 1; text-transform: uppercase; font-weight: 700; flex: none; }
+.strip span { line-height: 1.3; font-size: .98rem; }
+.strip small { display: block; opacity: .8; font-size: .85rem; }
+
+/* ---------- services ---------- */
+.svc { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start; }
+.svc__photo { position: sticky; top: 92px; aspect-ratio: 4 / 4.3; overflow: hidden; border-radius: 4px; background: var(--navy-800); box-shadow: 0 24px 60px rgba(10, 27, 47, .35); }
+.svc__photo img { width: 100%; height: 100%; object-fit: cover; transition: opacity .35s ease, transform 1.2s ease; }
+.svc__photo.is-swap img { opacity: 0; transform: scale(1.04); }
+.svc__tag { position: absolute; left: 0; bottom: 1.4rem; background: var(--navy-950); color: var(--white); font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em; padding: .55rem 1.1rem .55rem 1.2rem; font-size: 1.1rem; border-right: 3px solid var(--steel); }
+.svc__list { display: flex; flex-direction: column; border-top: 1px solid rgba(10, 27, 47, .18); }
+.svc__item { text-align: left; background: none; border: 0; border-bottom: 1px solid rgba(10, 27, 47, .18); color: var(--ink); padding: 1.15rem .2rem 1.15rem 1.1rem; cursor: pointer; position: relative; transition: background .25s, padding .25s; font: inherit; min-width: 0; }
+.svc__item h3 { font-size: 1.65rem; color: var(--ink-2); transition: color .25s; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.svc__item h3::after { content: "+"; font-family: var(--font-body); font-weight: 400; font-size: 1.5rem; color: var(--steel); transition: transform .3s; }
+.svc__item p { color: var(--ink-2); max-height: 0; overflow: hidden; opacity: 0; margin: 0; transition: max-height .35s ease, opacity .3s ease, margin .3s; }
+.svc__item::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--steel); transform: scaleY(0); transform-origin: top; transition: transform .3s; }
+.svc__item:hover h3 { color: var(--ink); }
+.svc__item.is-active { background: rgba(255,255,255,.55); }
+.svc__item.is-active h3 { color: var(--ink); }
+.svc__item.is-active h3::after { transform: rotate(45deg); }
+.svc__item.is-active p { max-height: 12em; opacity: 1; margin-top: .55rem; }
+.svc__item.is-active::before { transform: scaleY(1); }
+
+/* ---------- build track ---------- */
+.track-ctl { display: flex; gap: .5rem; }
+.ctl { width: 48px; height: 48px; border: 1px solid var(--line); background: transparent; color: var(--white); border-radius: 50%; font-size: 1.3rem; cursor: pointer; transition: background .2s, border-color .2s; }
+.ctl:hover { background: var(--steel); border-color: var(--steel); }
+.track { list-style: none; margin: 2.2rem 0 0; padding: 0 max(var(--gutter), calc((100% - var(--maxw)) / 2)) .6rem; display: flex; gap: 1.1rem; overflow-x: auto; scroll-snap-type: x mandatory; scroll-padding-left: max(var(--gutter), calc((100% - var(--maxw)) / 2)); scrollbar-width: thin; scrollbar-color: var(--steel) transparent; }
+.stage { flex: 0 0 min(340px, 78vw); scroll-snap-align: start; position: relative; aspect-ratio: 3 / 4; overflow: hidden; border-radius: 4px; background: var(--navy-800); }
+.stage img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s ease; }
+.stage:hover img { transform: scale(1.05); }
+.stage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 52%, rgba(2,13,26,.92) 100%); pointer-events: none; }
+.stage__cap { position: absolute; left: 1.1rem; right: 1.1rem; bottom: 1rem; z-index: 1; }
+.stage__cap span { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .2em; font-size: .95rem; color: var(--steel-lt); }
+.stage__cap h3 { font-size: 1.7rem; margin-top: .15rem; }
+
+/* ---------- gallery ---------- */
+.filters { display: flex; flex-wrap: wrap; gap: .55rem; margin-bottom: 1.8rem; }
+.chip { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em; font-size: 1.05rem; font-weight: 500; color: var(--silver); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: .5rem 1.15rem; cursor: pointer; transition: all .2s; }
+.chip:hover { border-color: var(--steel); color: var(--white); }
+.chip.is-active { background: var(--steel); border-color: var(--steel); color: var(--white); }
+.gallery { columns: 3; column-gap: 1rem; }
+.shot { break-inside: avoid; margin: 0 0 1rem; position: relative; overflow: hidden; border-radius: 4px; cursor: zoom-in; background: var(--navy-900); display: block; width: 100%; padding: 0; border: 0; }
+.shot img { width: 100%; height: auto; transition: transform .8s ease, filter .4s; }
+.shot:hover img { transform: scale(1.04); filter: brightness(1.08); }
+.shot::after { content: attr(data-label); position: absolute; left: 0; right: 0; bottom: 0; padding: 1.8rem .9rem .7rem; text-align: left; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: 1rem; color: var(--white); background: linear-gradient(180deg, transparent, rgba(2,13,26,.88)); opacity: 0; transition: opacity .3s; }
+.shot:hover::after, .shot:focus-visible::after { opacity: 1; }
+.shot[hidden] { display: none; }
+
+/* ---------- about ---------- */
+.about { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(1.5rem, 5vw, 4.5rem); align-items: center; }
+.about__photo { position: relative; aspect-ratio: 4 / 5; border-radius: 4px; box-shadow: 24px 24px 0 var(--paper-2), 0 24px 60px rgba(10,27,47,.3); }
+.about__photo img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+.about__text h2 { font-size: clamp(2rem, 4.4vw, 3.2rem); margin-bottom: 1.2rem; }
+.about__text p { color: var(--ink-2); max-width: 58ch; }
+.checks { list-style: none; padding: 0; margin: 1.2rem 0 1.8rem; display: grid; gap: .55rem; }
+.checks li { padding-left: 1.8rem; position: relative; color: var(--ink); font-weight: 600; }
+.checks li::before { content: ""; position: absolute; left: 0; top: .5em; width: 1rem; height: .55rem; border-left: 3px solid #2f6199; border-bottom: 3px solid #2f6199; transform: rotate(-45deg) translateY(-30%); }
+.review { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; padding: 1.1rem 1.3rem; background: var(--white); border-left: 4px solid var(--steel); border-radius: 3px; box-shadow: 0 8px 24px rgba(10,27,47,.1); }
+.review__score { font-family: var(--font-display); font-size: 2.8rem; font-weight: 700; color: #2f6199; line-height: 1; }
+.review > div:nth-child(2) { display: flex; flex-direction: column; line-height: 1.3; flex: 1; min-width: 140px; }
+.review span { color: var(--ink-2); font-size: .95rem; }
+
+/* ---------- quote ---------- */
+.quote { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: clamp(1.5rem, 5vw, 4.5rem); align-items: start; }
+.quote__intro h2 { font-size: clamp(2.1rem, 4.6vw, 3.4rem); margin-bottom: 1.1rem; }
+.quote__intro p { color: var(--silver); max-width: 44ch; }
+.contact { margin: 2rem 0 0; display: grid; gap: 1rem; }
+.contact div { border-top: 1px solid var(--line); padding-top: .8rem; }
+.contact dt { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .2em; font-size: .9rem; color: var(--steel-lt); }
+.contact dd { margin: .1rem 0 0; font-size: 1.25rem; }
+.contact a { text-decoration: none; border-bottom: 1px solid var(--steel); }
+.form { background: var(--navy-800); border: 1px solid var(--line); border-radius: 4px; padding: clamp(1.2rem, 3vw, 2.2rem); display: grid; gap: 1.1rem; box-shadow: 0 30px 80px rgba(0,0,0,.35); min-width: 0; }
+.form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; align-items: end; }
+.form label { display: grid; gap: .4rem; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: .98rem; color: var(--silver); min-width: 0; }
+.form input:not([type="radio"]), .form select, .form textarea { width: 100%; font: 400 1.05rem var(--font-body); letter-spacing: 0; text-transform: none; color: var(--white); background: var(--navy-950); border: 1px solid rgba(201,211,223,.22); border-radius: 3px; padding: .8rem .9rem; transition: border-color .2s, box-shadow .2s; }
+.form textarea { resize: vertical; min-height: 120px; }
+.form input:focus, .form select:focus, .form textarea:focus { outline: none; border-color: var(--steel-lt); box-shadow: 0 0 0 3px rgba(74,127,193,.3); }
+.form .is-bad { border-color: #e58a8a; }
+.pref { border: 0; padding: 0; margin: 0; display: flex; gap: 1.4rem; flex-wrap: wrap; align-items: center; }
+.pref legend { float: left; margin-right: 1.4rem; padding: 0; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: .98rem; color: var(--silver); }
+.form .radio { display: flex; align-items: center; gap: .5rem; grid-template-columns: none; font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: 1.05rem; color: var(--white); cursor: pointer; }
+.radio input { accent-color: var(--steel); width: 18px; height: 18px; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form__msg { margin: 0; min-height: 1.5em; font-size: 1rem; color: var(--silver); }
+.form__msg.ok { color: #9fe0b5; } .form__msg.err { color: #f2a3a3; }
+.form__msg small { display: block; color: var(--muted); }
+
+/* ---------- footer ---------- */
+.footer { background: var(--navy-950); border-top: 1px solid var(--line); padding-top: 3rem; }
+.footer__row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2rem; align-items: center; padding-bottom: 2.2rem; }
+.footer__brand img { width: min(300px, 100%); height: auto; }
+.footer__col { display: grid; gap: .35rem; justify-items: start; }
+.footer__col h4 { font-size: 1rem; letter-spacing: .22em; color: var(--steel-lt); margin-bottom: .3rem; }
+.footer__col a { text-decoration: none; font-size: 1.15rem; }
+.footer__col a:hover { color: var(--steel-lt); }
+.social { display: inline-flex; align-items: center; gap: .6rem; }
+.footer__legal { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-block: 1.2rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .92rem; }
+.callbar { display: none; }
+
+/* ---------- lightbox ---------- */
+.lb { position: fixed; inset: 0; z-index: 100; background: rgba(2,13,26,.96); display: flex; align-items: center; justify-content: center; padding: 3.2rem 4rem; }
+.lb[hidden] { display: none; }
+.lb__fig { margin: 0; max-width: 100%; max-height: 100%; display: flex; flex-direction: column; align-items: center; gap: .8rem; }
+.lb__fig img { max-width: 100%; max-height: calc(100vh - 9rem); width: auto; height: auto; border-radius: 3px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+.lb__fig figcaption { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em; color: var(--silver); text-align: center; }
+.lb__x, .lb__nav { position: absolute; background: rgba(8,32,60,.8); border: 1px solid var(--line); color: var(--white); width: 48px; height: 48px; border-radius: 50%; font-size: 1.6rem; cursor: pointer; line-height: 1; }
+.lb__x:hover, .lb__nav:hover { background: var(--steel); }
+.lb__x { top: max(1rem, env(safe-area-inset-top, 0px)); right: max(1rem, env(safe-area-inset-right, 0px)); }
+.lb__prev { left: 1rem; } .lb__next { right: 1rem; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 960px) {
+  .nav { position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; gap: 0; background: var(--navy-950); border-bottom: 1px solid var(--line); margin: 0; padding: .4rem var(--gutter-r) .8rem var(--gutter); display: none; }
+  .nav.is-open { display: flex; }
+  .nav a { padding: .85rem 0; border-bottom: 1px solid var(--line); font-size: 1.2rem; }
+  .nav-toggle { display: block; margin-left: auto; }
+  .header-call { display: none; }
+  .svc { grid-template-columns: 1fr; }
+  .svc__photo { position: relative; top: 0; aspect-ratio: 4 / 3; }
+  .about, .quote { grid-template-columns: 1fr; }
+  .about__photo { aspect-ratio: 4 / 3; box-shadow: 14px 14px 0 var(--paper-2); margin-right: 14px; }
+  .gallery { columns: 2; }
+  .footer__row { grid-template-columns: 1fr 1fr; }
+  .footer__brand { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)); }
+  .strip__row { grid-template-columns: 1fr; }
+  .strip__row > div { border-left: 0; border-top: 1px solid rgba(255,255,255,.22); padding: 1rem 0; }
+  .strip__row > div:first-child { border-top: 0; }
+  .form__row { grid-template-columns: 1fr; }
+  .gallery { columns: 2; column-gap: .6rem; }
+  .shot { margin-bottom: .6rem; }
+  .lb { padding: 3.4rem .6rem 4.2rem; }
+  .lb__prev, .lb__next { top: auto; bottom: 1rem; }
+  .lb__prev { left: calc(50% - 60px); } .lb__next { right: calc(50% - 60px); }
+  .callbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; align-items: center; justify-content: center; padding: .95rem 1rem calc(.95rem + env(safe-area-inset-bottom, 0px)); background: linear-gradient(180deg, #ffffff, #c4d0de); color: var(--navy-950); font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em; font-weight: 700; font-size: 1.25rem; text-decoration: none; box-shadow: 0 -10px 30px rgba(2,13,26,.5); }
+  .brand { font-size: 1.15rem; }
+  .brand img { width: 34px; height: 34px; }
+  .footer__row { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hero__bg img, .blade { animation: none; }
+  * { transition-duration: .01ms !important; }
+}
+
+</style>
+
+
+<header class="site-header" id="top">
+  <div class="wrap header-row">
+    <a class="brand" href="#top" aria-label="Rock Shore Builders home">
+      <img src="images/favicon.png" width="40" height="40" alt="">
+      <span>Rock Shore <b>Builders</b></span>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#services">Services</a>
+      <a href="#build">The Build</a>
+      <a href="#work">Our Work</a>
+      <a href="#about">About</a>
+      <a href="#quote">Free Quote</a>
+    </nav>
+    <a class="btn btn--sm btn--metal header-call" href="tel:+12075908374">(207) 590-8374</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<section class="hero" aria-labelledby="heroTitle">
+  <div class="hero__bg"><img src="images/19-build-side-shingles-entry-porch.jpg" alt="" fetchpriority="high"></div>
+  <div class="hero__shade"></div>
+  <div class="wrap hero__inner">
+    <p class="eyebrow eyebrow--center">Hollis Center, Maine &nbsp;/&nbsp; Carpentry &nbsp;/&nbsp; Construction</p>
+    <div class="hero__logo-wrap">
+      <svg class="blade" id="blade" viewBox="-300 -300 600 600" aria-hidden="true"></svg>
+      <img class="hero__logo" src="images/logo-t.png" width="1216" height="768" alt="Rock Shore Builders, Inc. logo">
+    </div>
+    <h1 id="heroTitle">Maine carpentry, built to last.</h1>
+    <p class="hero__lead">Over 30 years of construction, carpentry and finish work. New homes, remodels, custom tile showers, decks and stairs, built by a lifetime Mainer who sweats the details.</p>
+    <div class="hero__cta">
+      <a class="btn btn--metal" href="#quote">Get a free quote</a>
+      <a class="btn btn--ghost" href="#work">See the work</a>
+    </div>
+  </div>
+</section>
+
+<section class="strip" aria-label="Highlights">
+  <div class="wrap strip__row">
+    <div><strong>30+</strong><span>years in construction and carpentry</span></div>
+    <div><strong>100%</strong><span>of customers recommend us<small>6 reviews on Facebook</small></span></div>
+    <div><strong>Free</strong><span>project quotes, no obligation</span></div>
+  </div>
+</section>
+
+<section class="section section--paper" id="services">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">What we build</p>
+      <h2>From the first stud to the last piece of trim</h2>
+    </header>
+    <div class="svc">
+      <div class="svc__photo" aria-live="polite">
+        <img id="svcImg" src="images/19-build-side-shingles-entry-porch.jpg" alt="New construction by Rock Shore Builders">
+        <span class="svc__tag" id="svcTag">New Construction</span>
+      </div>
+      <div class="svc__list" role="tablist" aria-label="Services">
+        <button class="svc__item is-active" role="tab" aria-selected="true" data-img="images/19-build-side-shingles-entry-porch.jpg" data-alt="Shingled roof, timber-frame entry porch and vertical siding on a new home">
+          <h3>New Construction</h3>
+          <p>Framing through finish on custom homes. Timber-frame porches and decks, vaulted tongue-and-groove ceilings, and clean detail all the way through.</p>
+        </button>
+        <button class="svc__item" role="tab" aria-selected="false" data-img="images/06-exterior-blue-cape-steps.jpg" data-alt="Blue Cape home with a new dormer, french doors and new wood steps">
+          <h3>Remodeling</h3>
+          <p>Dormers, new entries, siding and full interior renovations that make an older house work like a new one.</p>
+        </button>
+        <button class="svc__item" role="tab" aria-selected="false" data-img="images/08-shower-green-tile-hex.jpg" data-alt="Custom tile shower with hex mosaic floor and built-in niche">
+          <h3>Custom Tile Showers</h3>
+          <p>Hand-set tile, mosaic floors, built-in niches and corner seats, finished with the care a shower needs to last.</p>
+        </button>
+        <button class="svc__item" role="tab" aria-selected="false" data-img="images/05-kitchen-white-shaker.jpg" data-alt="White shaker kitchen with peninsula and subway tile backsplash">
+          <h3>Kitchens &amp; Baths</h3>
+          <p>Cabinets, counters, tile and trim, installed square and tight. Kitchens and bathrooms you will be glad to walk into every day.</p>
+        </button>
+        <button class="svc__item" role="tab" aria-selected="false" data-img="images/04-deck-pressure-treated.jpg" data-alt="New pressure-treated deck with black balusters and wide steps">
+          <h3>Decks &amp; Outdoor Stairs</h3>
+          <p>Pressure-treated and composite decks, railings and entry stairs, some with built-in planters.</p>
+        </button>
+        <button class="svc__item" role="tab" aria-selected="false" data-img="images/09-granite-steps-rail-front.jpg" data-alt="Granite entry steps with cedar posts and black handrail">
+          <h3>Granite Steps &amp; Entries</h3>
+          <p>Solid granite steps with cedar posts and a clean black rail. Maine stone that outlasts the house.</p>
+        </button>
+        <button class="svc__item" role="tab" aria-selected="false" data-img="images/03-stair-runner-after.jpg" data-alt="Oak staircase with a patterned navy runner">
+          <h3>Interior Stairs &amp; Finish</h3>
+          <p>Stair treads and runners, trim, and the finish carpentry that decides how a room feels.</p>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--deep" id="build">
+  <div class="wrap">
+    <header class="section__head section__head--row">
+      <div>
+        <p class="eyebrow">One lakefront build, in stages</p>
+        <h2>Framing to finish</h2>
+      </div>
+      <div class="track-ctl" aria-label="Scroll stages">
+        <button class="ctl" id="trackPrev" aria-label="Previous stage">&larr;</button>
+        <button class="ctl" id="trackNext" aria-label="Next stage">&rarr;</button>
+      </div>
+    </header>
+    <p class="section__intro">A new home takes hundreds of decisions long before anyone says it looks done. Here is how one Maine lakefront house went from framing to a closed-in, finished exterior.</p>
+  </div>
+  <ol class="track" id="track">
+    <li class="stage"><img loading="lazy" src="images/22-build-front-framing-garage-bays.jpg" alt="Front of the house framed and wrapped over garage bays"><div class="stage__cap"><span>Stage 1</span><h3>Framing &amp; house wrap</h3></div></li>
+    <li class="stage"><img loading="lazy" src="images/20-build-interior-rafters-scaffold.jpg" alt="Interior rafters and scaffold inside the framed house"><div class="stage__cap"><span>Stage 2</span><h3>Rafters &amp; structure</h3></div></li>
+    <li class="stage"><img loading="lazy" src="images/26-build-front-gable-timber-porch-framing.jpg" alt="Front gable with timber-frame porch beams"><div class="stage__cap"><span>Stage 3</span><h3>Gable &amp; timber frame</h3></div></li>
+    <li class="stage"><img loading="lazy" src="images/24-build-interior-tg-ceiling-lake-view.jpg" alt="Vaulted tongue-and-groove ceiling with a lake view through the opening"><div class="stage__cap"><span>Stage 4</span><h3>Tongue-and-groove ceiling</h3></div></li>
+    <li class="stage"><img loading="lazy" src="images/27-build-interior-sprayfoam-stairs-loft.jpg" alt="Insulated great room with stairs and loft"><div class="stage__cap"><span>Stage 5</span><h3>Insulated &amp; enclosed</h3></div></li>
+    <li class="stage"><img loading="lazy" src="images/19-build-side-shingles-entry-porch.jpg" alt="Shingled roof, siding and timber entry porch against a blue sky"><div class="stage__cap"><span>Stage 6</span><h3>Roof, siding &amp; entry</h3></div></li>
+  </ol>
+</section>
+
+<section class="section section--navy" id="work">
+  <div class="wrap">
+    <header class="section__head">
+      <p class="eyebrow">Our work</p>
+      <h2>Real jobs, real Maine homes</h2>
+    </header>
+    <div class="filters" id="filters" role="group" aria-label="Filter projects">
+      <button class="chip is-active" data-f="all">All</button>
+      <button class="chip" data-f="new">New Builds</button>
+      <button class="chip" data-f="bath">Showers &amp; Baths</button>
+      <button class="chip" data-f="stairs">Stairs &amp; Steps</button>
+      <button class="chip" data-f="other">Kitchens, Decks &amp; Exteriors</button>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </div>
+</section>
+
+<section class="section section--paper" id="about">
+  <div class="wrap about">
+    <div class="about__photo">
+      <img loading="lazy" src="images/17-build-front-gable-timber-deck-autumn.jpg" alt="Crew working on the front of a gabled timber-frame home in autumn">
+    </div>
+    <div class="about__text">
+      <p class="eyebrow">About us</p>
+      <h2>A lifetime Mainer with over 30 years in the trade</h2>
+      <p>Rock Shore Builders is a Maine carpentry and construction company with more than 30 years of experience in framing, carpentry and finish work. The work ranges from ground-up homes to a single custom tile shower, and it gets the same attention either way.</p>
+      <p>We are based in Hollis Center and we build for people who live here. That means right-sized plans, honest answers about what a job takes, and a finished product that holds up through a Maine winter.</p>
+      <ul class="checks">
+        <li>Straight answers and clear scope before work starts</li>
+        <li>Careful, tidy job sites</li>
+        <li>Finish carpentry that looks right up close</li>
+      </ul>
+      <div class="review">
+        <div class="review__score">100%</div>
+        <div>
+          <strong>Recommended by customers</strong>
+          <span>6 reviews on Facebook</span>
+        </div>
+        <a class="btn btn--sm btn--outline" href="https://www.facebook.com/profile.php?id=61569906432004" target="_blank" rel="noopener">Read on Facebook</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section section--deep" id="quote">
+  <div class="wrap quote">
+    <div class="quote__intro">
+      <p class="eyebrow">Free quote</p>
+      <h2>Tell us about your project</h2>
+      <p>Send a few details and we will get back to you. Photos and rough measurements help, but you do not need plans to start the conversation.</p>
+      <dl class="contact">
+        <div><dt>Call</dt><dd><a href="tel:+12075908374">(207) 590-8374</a></dd></div>
+        <div><dt>Based in</dt><dd>Hollis Center, Maine</dd></div>
+        <div><dt>Facebook</dt><dd><a href="https://www.facebook.com/profile.php?id=61569906432004" target="_blank" rel="noopener">Rock Shore Builders, Inc.</a></dd></div>
+      </dl>
+    </div>
+    <form class="form" id="quoteForm" novalidate>
+      <div class="form__row">
+        <label for="f_name">Name<input id="f_name" name="name" autocomplete="name" required></label>
+        <label for="f_phone">Phone<input id="f_phone" name="phone" type="tel" autocomplete="tel" required></label>
+      </div>
+      <div class="form__row">
+        <label for="f_email">Email<input id="f_email" name="email" type="email" autocomplete="email"></label>
+        <label for="f_town">Project town<input id="f_town" name="town" autocomplete="address-level2"></label>
+      </div>
+      <div class="form__row">
+        <label for="f_type">Project type
+          <select id="f_type" name="project_type" required>
+            <option value="">Choose one</option>
+            <option>New home construction</option>
+            <option>Remodel or renovation</option>
+            <option>Custom tile shower or bath</option>
+            <option>Kitchen</option>
+            <option>Deck or outdoor stairs</option>
+            <option>Granite steps</option>
+            <option>Interior stairs or finish carpentry</option>
+            <option>Something else</option>
+          </select>
+        </label>
+        <label for="f_time">Timeline
+          <select id="f_time" name="timeline">
+            <option value="">Not sure yet</option>
+            <option>As soon as possible</option>
+            <option>Within 3 months</option>
+            <option>3 to 6 months</option>
+            <option>Just planning</option>
+          </select>
+        </label>
+      </div>
+      <label for="f_msg">About the project<textarea id="f_msg" name="message" rows="5" placeholder="What are you looking to build or fix?"></textarea></label>
+      <fieldset class="pref">
+        <legend>Best way to reach you</legend>
+        <label class="radio"><input type="radio" name="contact_pref" value="Call" checked> Call</label>
+        <label class="radio"><input type="radio" name="contact_pref" value="Text"> Text</label>
+        <label class="radio"><input type="radio" name="contact_pref" value="Email"> Email</label>
+      </fieldset>
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn--metal btn--block" type="submit" id="formBtn">Send my request</button>
+      <p class="form__msg" id="formMsg" role="status"></p>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__row">
+    <div class="footer__brand">
+      <img src="images/logo-t.png" width="1216" height="768" alt="Rock Shore Builders, Inc." loading="lazy">
+    </div>
+    <div class="footer__col">
+      <h4>Contact</h4>
+      <a href="tel:+12075908374">(207) 590-8374</a>
+      <span>Hollis Center, Maine</span>
+    </div>
+    <div class="footer__col">
+      <h4>Follow</h4>
+      <a class="social" href="https://www.facebook.com/profile.php?id=61569906432004" target="_blank" rel="noopener" aria-label="Rock Shore Builders on Facebook">
+        <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-8.2h2.8l.5-3.3h-3.3V8.4c0-.9.4-1.7 1.8-1.7h1.6V3.9c-.3 0-1.3-.2-2.5-.2-2.6 0-4.3 1.6-4.3 4.4v2.4H7.3v3.3h2.8V22h3.4Z"/></svg>
+        <span>Facebook</span>
+      </a>
+    </div>
+  </div>
+  <div class="wrap footer__legal">
+    <span>&copy; <span id="yr">2026</span> Rock Shore Builders, Inc. All rights reserved.</span>
+    <span>Website by Real Easy Sites</span>
+  </div>
+</footer>
+
+<a class="callbar" href="tel:+12075908374">Call (207) 590-8374</a>
+
+<div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+  <button class="lb__x" id="lbX" aria-label="Close">&times;</button>
+  <button class="lb__nav lb__prev" id="lbPrev" aria-label="Previous photo">&larr;</button>
+  <figure class="lb__fig"><img id="lbImg" alt=""><figcaption id="lbCap"></figcaption></figure>
+  <button class="lb__nav lb__next" id="lbNext" aria-label="Next photo">&rarr;</button>
+</div>
+
+
+
+<script>window.RSB_PREVIEW=true</script>
+<script>
+(function () {
+  'use strict';
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  var yr = $('#yr'); if (yr) yr.textContent = new Date().getFullYear();
+
+  /* saw-blade ring behind the hero logo, echoing the logo's blade */
+  (function blade() {
+    var svg = $('#blade'); if (!svg) return;
+    var N = 84, r1 = 236, r2 = 262, d = '';
+    for (var i = 0; i < N; i++) {
+      var a0 = (i / N) * Math.PI * 2, a1 = ((i + 0.78) / N) * Math.PI * 2, a2 = ((i + 1) / N) * Math.PI * 2;
+      d += (i ? 'L' : 'M') + (r1 * Math.cos(a0)).toFixed(1) + ' ' + (r1 * Math.sin(a0)).toFixed(1) +
+        'L' + (r2 * Math.cos(a1)).toFixed(1) + ' ' + (r2 * Math.sin(a1)).toFixed(1) +
+        'L' + (r1 * Math.cos(a2)).toFixed(1) + ' ' + (r1 * Math.sin(a2)).toFixed(1);
+    }
+    svg.innerHTML =
+      '<path d="' + d + 'Z" fill="none" stroke="#7fa8dc" stroke-width="1.6" stroke-linejoin="round"/>' +
+      '<circle r="226" fill="none" stroke="#4a7fc1" stroke-width="1" stroke-dasharray="2 7"/>' +
+      '<circle r="276" fill="none" stroke="#c9d3df" stroke-width=".8" opacity=".5"/>';
+  })();
+
+  /* mobile nav */
+  var tg = $('#navToggle'), nav = $('#nav');
+  if (tg) {
+    tg.addEventListener('click', function () {
+      var open = nav.classList.toggle('is-open');
+      tg.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    $$('a', nav).forEach(function (a) { a.addEventListener('click', function () { nav.classList.remove('is-open'); tg.setAttribute('aria-expanded', 'false'); }); });
+  }
+
+  /* services: swap photo */
+  var svcImg = $('#svcImg'), svcTag = $('#svcTag'), svcBox = svcImg && svcImg.parentNode;
+  $$('.svc__item').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      if (btn.classList.contains('is-active')) return;
+      $$('.svc__item').forEach(function (b) { b.classList.remove('is-active'); b.setAttribute('aria-selected', 'false'); });
+      btn.classList.add('is-active'); btn.setAttribute('aria-selected', 'true');
+      svcBox.classList.add('is-swap');
+      var src = btn.getAttribute('data-img'), alt = btn.getAttribute('data-alt'), name = $('h3', btn).textContent;
+      var pre = new Image();
+      var done = function () { svcImg.src = src; svcImg.alt = alt; svcTag.textContent = name; requestAnimationFrame(function () { svcBox.classList.remove('is-swap'); }); };
+      pre.onload = pre.onerror = function () { setTimeout(done, 180); };
+      pre.src = src;
+    });
+  });
+
+  /* build track arrows */
+  var track = $('#track');
+  function step(dir) { var w = $('.stage', track).getBoundingClientRect().width + 18; track.scrollBy({ left: dir * w, behavior: 'smooth' }); }
+  if (track) { $('#trackPrev').addEventListener('click', function () { step(-1); }); $('#trackNext').addEventListener('click', function () { step(1); }); }
+
+  /* gallery */
+  var P = 'images/';
+  var SHOTS = [
+    ['19-build-side-shingles-entry-porch', 2000, 1500, 'new', 'Shingled roof and timber entry porch'],
+    ['08-shower-green-tile-hex', 1050, 1400, 'bath', 'Custom tile shower with hex mosaic floor'],
+    ['26-build-front-gable-timber-porch-framing', 1400, 1050, 'new', 'Gable and timber-frame porch'],
+    ['09-granite-steps-rail-front', 1050, 1400, 'stairs', 'Granite entry steps with cedar posts'],
+    ['24-build-interior-tg-ceiling-lake-view', 2000, 1500, 'new', 'Vaulted tongue-and-groove ceiling'],
+    ['05-kitchen-white-shaker', 1400, 1050, 'other', 'White shaker kitchen'],
+    ['13-composite-stairs-planters-angle', 1400, 1050, 'stairs', 'Composite stairs with built-in planters'],
+    ['17-build-front-gable-timber-deck-autumn', 1050, 1400, 'new', 'Timber-frame deck and gable'],
+    ['15-shower-white-brick-tile', 1050, 1400, 'bath', 'Large-format brick tile shower'],
+    ['06-exterior-blue-cape-steps', 2000, 1500, 'other', 'Cape remodel with new dormer and steps'],
+    ['28-build-interior-sprayfoam-windows-lake', 1050, 1400, 'new', 'Great room with lake-view windows'],
+    ['03-stair-runner-after', 1198, 1400, 'stairs', 'Oak stairs with patterned runner'],
+    ['04-deck-pressure-treated', 1400, 1050, 'other', 'New deck with black balusters'],
+    ['07-bath-vanity-granite', 1050, 1400, 'bath', 'Bathroom with granite vanity top'],
+    ['18-build-triangle-windows-deck-framing', 1050, 1400, 'new', 'Triangle windows over deck framing'],
+    ['14-composite-stairs-planters-front', 1400, 1050, 'stairs', 'Composite entry stairs, front view'],
+    ['27-build-interior-sprayfoam-stairs-loft', 1050, 1400, 'new', 'Insulated great room with stairs and loft'],
+    ['12-shower-green-tile-wide', 1050, 1400, 'bath', 'Tile shower, wide view'],
+    ['10-granite-steps-straight', 1400, 1050, 'stairs', 'Granite steps'],
+    ['22-build-front-framing-garage-bays', 1050, 1400, 'new', 'Framing and house wrap'],
+    ['23-build-interior-lake-view-deck', 1050, 1400, 'new', 'Framing with a view of the lake'],
+    ['11-granite-steps-side', 1050, 1400, 'stairs', 'Granite steps, side view'],
+    ['25-build-interior-framing-plywood', 1400, 1050, 'new', 'Interior framing and loft'],
+    ['16-build-side-wrap-scaffold', 1050, 1400, 'new', 'Siding going on'],
+    ['20-build-interior-rafters-scaffold', 1050, 1400, 'new', 'Rafter framing'],
+    ['21-build-interior-rafters-wide', 1050, 1400, 'new', 'Open rafter framing'],
+    ['02-stair-runner-before', 1092, 1400, 'stairs', 'Oak stairs before the runner']
+  ];
+  var gal = $('#gallery'), shown = [];
+  SHOTS.forEach(function (s, i) {
+    var b = document.createElement('button');
+    b.className = 'shot'; b.type = 'button'; b.setAttribute('data-cat', s[3]); b.setAttribute('data-label', s[4]);
+    b.setAttribute('aria-label', 'View photo: ' + s[4]);
+    var img = new Image(); img.loading = 'lazy'; img.width = s[1]; img.height = s[2]; img.src = P + s[0] + '.jpg'; img.alt = s[4] + ', Rock Shore Builders';
+    b.appendChild(img); gal.appendChild(b);
+    b.addEventListener('click', function () { openLb(b); });
+  });
+  $$('#filters .chip').forEach(function (c) {
+    c.addEventListener('click', function () {
+      $$('#filters .chip').forEach(function (x) { x.classList.remove('is-active'); });
+      c.classList.add('is-active');
+      var f = c.getAttribute('data-f');
+      $$('.shot', gal).forEach(function (s) { s.hidden = !(f === 'all' || s.getAttribute('data-cat') === f); });
+    });
+  });
+
+  /* lightbox */
+  var lb = $('#lb'), lbImg = $('#lbImg'), lbCap = $('#lbCap'), cur = null, lastFocus = null;
+  function vis() { return $$('.shot', gal).filter(function (s) { return !s.hidden; }); }
+  function show(el) { cur = el; var im = $('img', el); lbImg.src = im.src; lbImg.alt = im.alt; lbCap.textContent = el.getAttribute('data-label'); }
+  function openLb(el) { lastFocus = document.activeElement; show(el); lb.hidden = false; document.body.style.overflow = 'hidden'; $('#lbX').focus(); }
+  function closeLb() { lb.hidden = true; document.body.style.overflow = ''; if (lastFocus) lastFocus.focus(); }
+  function move(d) { var v = vis(), i = v.indexOf(cur); if (i < 0) return; show(v[(i + d + v.length) % v.length]); }
+  $('#lbX').addEventListener('click', closeLb);
+  $('#lbPrev').addEventListener('click', function () { move(-1); });
+  $('#lbNext').addEventListener('click', function () { move(1); });
+  lb.addEventListener('click', function (e) { if (e.target === lb) closeLb(); });
+  document.addEventListener('keydown', function (e) {
+    if (lb.hidden) return;
+    if (e.key === 'Escape') closeLb(); else if (e.key === 'ArrowLeft') move(-1); else if (e.key === 'ArrowRight') move(1);
+  });
+  var tx = null;
+  lb.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; }, { passive: true });
+  lb.addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; if (Math.abs(dx) > 50) move(dx < 0 ? 1 : -1); tx = null; });
+
+  /* quote form */
+  var form = $('#quoteForm'), msg = $('#formMsg'), btn = $('#formBtn');
+  function say(t, cls, small) { msg.className = 'form__msg ' + (cls || ''); msg.textContent = t; if (small) { var s = document.createElement('small'); s.textContent = small; msg.appendChild(s); } }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var data = {}; new FormData(form).forEach(function (v, k) { data[k] = String(v).trim(); });
+    var bad = [];
+    ['name', 'phone', 'project_type'].forEach(function (k) { var el = form.elements[k]; var miss = !data[k]; el.classList.toggle('is-bad', miss); if (miss) bad.push(k); });
+    if (data.email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(data.email)) { form.elements.email.classList.add('is-bad'); bad.push('email'); } else form.elements.email.classList.remove('is-bad');
+    if (bad.length) { say('Please fill in your name, phone number and project type.', 'err'); return; }
+    btn.disabled = true; btn.textContent = 'Sending...';
+    if (window.RSB_PREVIEW) {
+      setTimeout(function () { btn.disabled = false; btn.textContent = 'Send my request'; form.reset(); say('Thank you. Your request is in.', 'ok', 'Preview only: on the live site this goes straight to the Rock Shore Builders lead dashboard and inbox.'); }, 700);
+      return;
+    }
+    fetch('/api/quote', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
+      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (o) {
+        if (!o.ok) throw new Error(o.j && o.j.error || 'Something went wrong');
+        form.reset(); say('Thank you. We got your request and will be in touch soon.', 'ok');
+      })
+      .catch(function (err) { say(err.message + '. You can also call (207) 590-8374.', 'err'); })
+      .then(function () { btn.disabled = false; btn.textContent = 'Send my request'; });
+  });
+})();
+
+</script>

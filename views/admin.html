@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Leads | Rock Shore Builders</title><meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#041326;--card:#08203c;--card2:#0b2a4d;--line:rgba(201,211,223,.16);--steel:#4a7fc1;--steel2:#7fa8dc;--white:#f4f7fb;--mut:#93a8c0;
+--new:#e0b04a;--contacted:#4a9fd8;--quoted:#9a86d8;--won:#52b788;--lost:#c26d6d;--archived:#6b7f96}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--white);font:400 1rem/1.5 "Source Sans 3",system-ui,sans-serif}
+header{display:flex;align-items:center;gap:1rem;padding:.8rem 1.2rem;border-bottom:1px solid var(--line);background:#020d1a;position:sticky;top:0;z-index:5;flex-wrap:wrap}
+header img{height:42px}
+header h1{font:600 1.25rem "Barlow Condensed",sans-serif;letter-spacing:.16em;text-transform:uppercase;margin:0;flex:1}
+.hbtn{font:600 1rem "Barlow Condensed",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:none;border:1px solid var(--line);border-radius:3px;padding:.45rem .9rem;cursor:pointer;text-decoration:none}
+.hbtn:hover{border-color:var(--steel)}
+main{max-width:1100px;margin:0 auto;padding:1.2rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:.7rem;margin-bottom:1.2rem}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:.8rem 1rem;cursor:pointer;text-align:left;color:inherit;font:inherit}
+.stat b{display:block;font:600 2rem/1 "Barlow Condensed",sans-serif;letter-spacing:.04em}
+.stat span{font:500 .9rem "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mut)}
+.stat.on{border-color:var(--steel);background:var(--card2)}
+.lead{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c,var(--steel));border-radius:4px;padding:1rem 1.1rem;margin-bottom:.8rem;display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:1rem}
+.lead h2{margin:0;font:600 1.4rem "Barlow Condensed",sans-serif;letter-spacing:.06em;text-transform:uppercase}
+.meta{color:var(--mut);font-size:.92rem}
+.proj{display:inline-block;margin:.3rem 0;padding:.15rem .6rem;border:1px solid var(--line);border-radius:999px;font-size:.88rem;color:var(--steel2)}
+.msg{white-space:pre-wrap;margin:.5rem 0 0;color:#dce6f2}
+.contact a{color:var(--white);font-weight:600}
+.ctl label{display:block;font:500 .85rem "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin:0 0 .25rem}
+select,textarea{width:100%;background:#020d1a;border:1px solid var(--line);border-radius:3px;color:var(--white);font:inherit;padding:.5rem .6rem}
+textarea{min-height:70px;resize:vertical;margin-bottom:.6rem}
+.saved{font-size:.85rem;color:#9fe0b5;min-height:1.2em}
+.empty{text-align:center;padding:3rem 1rem;color:var(--mut);border:1px dashed var(--line);border-radius:4px}
+@media(max-width:720px){.lead{grid-template-columns:1fr}}
+</style></head><body>
+<header><img src="/images/logo-t.png" alt=""><h1>Lead dashboard</h1>
+<a class="hbtn" href="/admin/api/export.csv">Export CSV</a>
+<a class="hbtn" href="/" target="_blank" rel="noopener">View site</a>
+<form method="post" action="/admin/logout" style="margin:0"><button class="hbtn" type="submit">Sign out</button></form></header>
+<main>
+<div class="stats" id="stats"></div>
+<div id="list"></div>
+</main>
+<script>
+(function(){
+var COL={new:'--new',contacted:'--contacted',quoted:'--quoted',won:'--won',lost:'--lost',archived:'--archived'};
+var all=[],statuses=[],filter='all';
+var $=function(s){return document.querySelector(s)};
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function when(s){var d=new Date(s.replace(' ','T')+'Z');return isNaN(d)?s:d.toLocaleString([], {month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}
+function load(){fetch('/admin/api/leads').then(function(r){if(r.status===401){location.href='/admin/login';throw 0}return r.json()}).then(function(j){all=j.leads;statuses=j.statuses;render()}).catch(function(){})}
+function render(){
+  var counts={all:all.length};statuses.forEach(function(s){counts[s]=0});all.forEach(function(l){counts[l.status]++});
+  $('#stats').innerHTML=['all'].concat(statuses).map(function(s){return '<button class="stat'+(filter===s?' on':'')+'" data-s="'+s+'"><b>'+counts[s]+'</b><span>'+(s==='all'?'All':s)+'</span></button>'}).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.stat'),function(b){b.onclick=function(){filter=b.dataset.s;render()}});
+  var rows=all.filter(function(l){return filter==='all'||l.status===filter});
+  if(!rows.length){$('#list').innerHTML='<div class="empty">No leads here yet. New quote requests from the website show up in this list.</div>';return}
+  $('#list').innerHTML=rows.map(function(l){
+    return '<article class="lead" data-id="'+l.id+'" style="--c:var('+COL[l.status]+')"><div>'+
+      '<h2>'+esc(l.name)+'</h2><div class="meta">'+when(l.created_at)+(l.town?' &middot; '+esc(l.town):'')+'</div>'+
+      '<span class="proj">'+esc(l.project_type)+'</span>'+(l.timeline?' <span class="meta">'+esc(l.timeline)+'</span>':'')+
+      '<div class="contact"><a href="tel:'+esc(l.phone)+'">'+esc(l.phone)+'</a>'+(l.email?' &middot; <a href="mailto:'+esc(l.email)+'">'+esc(l.email)+'</a>':'')+(l.contact_pref?' <span class="meta">(prefers '+esc(l.contact_pref)+')</span>':'')+'</div>'+
+      (l.message?'<p class="msg">'+esc(l.message)+'</p>':'')+'</div>'+
+      '<div class="ctl"><label>Status</label><select data-k="status">'+statuses.map(function(s){return '<option'+(s===l.status?' selected':'')+'>'+s+'</option>'}).join('')+'</select>'+
+      '<label style="margin-top:.6rem">Notes</label><textarea data-k="notes" placeholder="Call notes, quote amount, next step">'+esc(l.notes)+'</textarea><div class="saved"></div></div></article>'}).join('');
+  Array.prototype.forEach.call(document.querySelectorAll('.lead'),function(card){
+    var id=card.dataset.id,saved=card.querySelector('.saved');
+    function save(body,rerender){fetch('/admin/api/leads/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json()}).then(function(u){
+      for(var i=0;i<all.length;i++)if(all[i].id==u.id)all[i]=u;saved.textContent='Saved';setTimeout(function(){saved.textContent=''},1500);if(rerender)render()})}
+    card.querySelector('select').onchange=function(e){save({status:e.target.value},true)};
+    card.querySelector('textarea').onblur=function(e){save({notes:e.target.value},false)};
+  });
+}
+load();setInterval(load,60000);
+})();
+</script></body></html>

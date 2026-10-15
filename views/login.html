@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in | Rock Shore Builders</title><meta name="robots" content="noindex">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#041326;--card:#08203c;--line:rgba(201,211,223,.18);--steel:#4a7fc1;--white:#f4f7fb;--mut:#93a8c0}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(ellipse at 50% 0,#0e2f55 0,#041326 60%);color:var(--white);font:400 1.05rem/1.5 "Source Sans 3",system-ui,sans-serif;padding:1rem}
+.card{width:min(400px,100%);background:var(--card);border:1px solid var(--line);border-radius:6px;padding:2rem;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+img{width:100%;max-width:230px;display:block;margin:0 auto 1rem}
+h1{font:600 1.5rem "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;text-align:center;margin:0 0 1.2rem}
+label{display:block;font:600 .9rem "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:.4rem}
+input{width:100%;padding:.8rem .9rem;background:#020d1a;border:1px solid var(--line);border-radius:3px;color:var(--white);font:inherit}
+input:focus{outline:2px solid var(--steel);outline-offset:1px}
+button{margin-top:1rem;width:100%;padding:.85rem;border:0;border-radius:3px;background:linear-gradient(180deg,#fff,#aebdcf);color:#020d1a;font:600 1.15rem "Barlow Condensed",sans-serif;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+.err{color:#f2a3a3;text-align:center;margin:0 0 1rem;display:none}
+</style></head><body>
+<form class="card" method="post" action="/admin/login">
+<img src="/images/logo-t.png" alt="Rock Shore Builders">
+<h1>Lead dashboard</h1>
+<p class="err" id="err">That password was not right.</p>
+<label for="pw">Password</label><input id="pw" name="password" type="password" autocomplete="current-password" autofocus required>
+<button type="submit">Sign in</button>
+</form>
+<script>if(location.search.indexOf('error')>-1)document.getElementById('err').style.display='block'</script>
+</body></html>
