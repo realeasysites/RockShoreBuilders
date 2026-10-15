@@ -45,9 +45,9 @@ p { margin: 0 0 1em; }
 .header-row { display: flex; align-items: center; gap: 1.25rem; min-height: 68px; }
 .brand { display: flex; align-items: center; gap: .65rem; text-decoration: none; font-family: var(--font-display); font-size: 1.35rem; letter-spacing: .08em; text-transform: uppercase; font-weight: 600; white-space: nowrap; }
 .brand b { color: var(--steel-lt); font-weight: 600; }
-.brand img { border-radius: 8px; }
+.brand img { width: auto; height: 50px; flex: none; border-radius: 0; filter: drop-shadow(0 2px 8px rgba(74,127,193,.35)); }
 .nav { display: flex; gap: 1.6rem; margin-left: auto; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em; font-size: 1.05rem; font-weight: 500; }
-.nav a { text-decoration: none; color: var(--silver); padding: .35rem 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+.nav a { white-space: nowrap; text-decoration: none; color: var(--silver); padding: .35rem 0; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
 .nav a:hover { color: var(--white); border-color: var(--steel); }
 .nav-toggle { display: none; background: none; border: 1px solid var(--line); border-radius: 8px; width: 44px; height: 44px; padding: 0; cursor: pointer; position: relative; }
 .nav-toggle span { position: absolute; left: 11px; right: 11px; height: 2px; background: var(--white); transition: transform .25s; }
@@ -216,12 +216,14 @@ p { margin: 0 0 1em; }
 .lb__prev { left: 1rem; } .lb__next { right: 1rem; }
 
 /* ---------- responsive ---------- */
-@media (max-width: 960px) {
+@media (max-width: 1260px) {
   .nav { position: absolute; left: 0; right: 0; top: 100%; flex-direction: column; gap: 0; background: var(--navy-950); border-bottom: 1px solid var(--line); margin: 0; padding: .4rem var(--gutter-r) .8rem var(--gutter); display: none; }
   .nav.is-open { display: flex; }
   .nav a { padding: .85rem 0; border-bottom: 1px solid var(--line); font-size: 1.2rem; }
   .nav-toggle { display: block; margin-left: auto; }
   .header-call { display: none; }
+}
+@media (max-width: 960px) {
   .svc { grid-template-columns: 1fr; }
   .svc__photo { position: relative; top: 0; aspect-ratio: 4 / 3; }
   .about, .quote { grid-template-columns: 1fr; }
@@ -243,7 +245,7 @@ p { margin: 0 0 1em; }
   .lb__prev { left: calc(50% - 60px); } .lb__next { right: calc(50% - 60px); }
   .callbar { display: flex; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60; align-items: center; justify-content: center; padding: .95rem 1rem calc(.95rem + env(safe-area-inset-bottom, 0px)); background: linear-gradient(180deg, #ffffff, #c4d0de); color: var(--navy-950); font-family: var(--font-display); text-transform: uppercase; letter-spacing: .14em; font-weight: 700; font-size: 1.25rem; text-decoration: none; box-shadow: 0 -10px 30px rgba(2,13,26,.5); }
   .brand { font-size: 1.15rem; }
-  .brand img { width: 34px; height: 34px; }
+  .brand img { width: auto; height: 38px; }
   .footer__row { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -252,13 +254,15 @@ p { margin: 0 0 1em; }
   * { transition-duration: .01ms !important; }
 }
 
+.header-call{white-space:nowrap}
+
 </style>
 
 
 <header class="site-header" id="top">
   <div class="wrap header-row">
     <a class="brand" href="#top" aria-label="Rock Shore Builders home">
-      <img src="images/favicon.png" width="40" height="40" alt="">
+      <img src="images/mark.png" width="56" height="50" alt="">
       <span>Rock Shore <b>Builders</b></span>
     </a>
     <nav class="nav" id="nav" aria-label="Main">
